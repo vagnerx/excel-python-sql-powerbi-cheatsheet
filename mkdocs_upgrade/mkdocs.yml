@@ -1,0 +1,13 @@
+site_name: Excel Python SQL Power BI Cheat Sheet
+site_description: Guia prático para Analytics
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.sections
+    - search.suggest
+    - search.highlight
+plugins:
+  - search
+nav:
+  - Início: index.md

@@ -1,0 +1,9 @@
+employee_id,name,department,city,salary,hire_date,sales
+1,Ana,TI,Porto Alegre,5000,2023-01-15,12000
+2,Carlos,RH,Canoas,7000,2022-06-10,8000
+3,João,TI,Porto Alegre,6000,2024-03-20,15000
+4,Maria,Vendas,Curitiba,4500,2021-11-05,22000
+5,Pedro,Vendas,Canoas,5500,2023-07-18,18000
+6,Fernanda,Financeiro,Porto Alegre,9000,2020-09-12,5000
+7,Lucas,TI,Curitiba,6500,2022-02-28,13000
+8,Juliana,RH,Porto Alegre,7200,2021-05-14,6000
