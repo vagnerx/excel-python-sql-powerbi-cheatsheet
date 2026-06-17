@@ -1,13 +1,68 @@
-site_name: Excel Python SQL Power BI Cheat Sheet
-site_description: Guia prático para Analytics
+site_name: Excel → Python → SQL → Power BI Cheat Sheet
+site_description: Guia prático para profissionais de Dados e Analytics
+site_author: Vagner Xavier
+site_url: https://vagnerx.github.io/excel-python-sql-powerbi-cheatsheet/
+
 theme:
   name: material
+  language: pt-BR
+
+  logo: docs/assets/logo.png
+  favicon: docs/assets/favicon.png
+
+  palette:
+    primary: blue
+    accent: amber
+
   features:
     - navigation.instant
     - navigation.sections
+    - navigation.expand
+    - navigation.top
     - search.suggest
     - search.highlight
+    - content.code.copy
+
 plugins:
   - search
+
 nav:
-  - Início: docs/ndex.md
+  - Início: index.md
+
+  - Grupo A:
+      - Importar Dados: 01-importar-dados.md
+      - Filtrar Linhas: 02-filtrar-linhas.md
+      - Selecionar Colunas: 03-selecionar-colunas.md
+      - Ordenar Dados: 04-ordenar-dados.md
+      - Agrupar: 05-agrupar-agregar.md
+      - Contar Linhas: 06-contar-linhas.md
+      - Média: 07-media.md
+      - Soma: 08-soma.md
+
+  - Grupo B:
+      - Valores Únicos: 09-obter-valores-unicos.md
+      - Renomear Colunas: 10-renomear-colunas.md
+      - Tipos de Dados: 11-tipos-de-dados.md
+      - Tratar Nulos: 12-tratar-nulos.md
+      - Merge Join: 13-merge-join.md
+      - Coluna Condicional: 14-coluna-condicional.md
+
+  - Grupo C:
+      - Min Max: 15-min-max.md
+      - Datas: 16-extracao-datas.md
+      - Filtrar Data: 17-filtrar-por-data.md
+      - Contar Únicos: 18-contar-unicos.md
+      - Top N: 19-top-n.md
+      - Percentual: 20-percentual.md
+
+  - Grupo D:
+      - Ranking: 21-ranking.md
+      - Acumulado: 22-acumulado.md
+      - Janela Móvel: 23-janela-movel.md
+      - Pivot Unpivot: 24-pivot-unpivot.md
+
+  - Exemplos:
+      - Excel: examples/excel/README.md
+      - Python: examples/python/README.md
+      - SQL: examples/sql/README.md
+      - Power BI: examples/powerbi/README.md
