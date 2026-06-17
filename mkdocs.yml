@@ -19,55 +19,65 @@ theme:
       accent: amber
 
   features:
-    - navigation.instant
     - navigation.sections
     - navigation.expand
+    - navigation.indexes
     - navigation.top
+    - toc.follow
+    - content.code.copy
     - search.suggest
     - search.highlight
-    - content.code.copy
-    - toc.follow
 
 plugins:
   - search
 
 nav:
-  - Início: index.md
+  - Home:
+      - Início: index.md
 
-  - Grupo A:
-      - Importar Dados: 01-importar-dados.md
-      - Filtrar Linhas: 02-filtrar-linhas.md
-      - Selecionar Colunas: 03-selecionar-colunas.md
-      - Ordenar Dados: 04-ordenar-dados.md
-      - Agrupar: 05-agrupar-agregar.md
-      - Contar Linhas: 06-contar-linhas.md
-      - Média: 07-media.md
-      - Soma: 08-soma.md
+  - Cheat Sheet:
+      - Grupo A · Manipulação Básica:
+          - Importar Dados: 01-importar-dados.md
+          - Filtrar Linhas: 02-filtrar-linhas.md
+          - Selecionar Colunas: 03-selecionar-colunas.md
+          - Ordenar Dados: 04-ordenar-dados.md
+          - Agrupar: 05-agrupar-agregar.md
+          - Contar Linhas: 06-contar-linhas.md
+          - Média: 07-media.md
+          - Soma: 08-soma.md
 
-  - Grupo B:
-      - Valores Únicos: 09-obter-valores-unicos.md
-      - Renomear Colunas: 10-renomear-colunas.md
-      - Tipos de Dados: 11-tipos-de-dados.md
-      - Tratar Nulos: 12-tratar-nulos.md
-      - Merge Join: 13-merge-join.md
-      - Coluna Condicional: 14-coluna-condicional.md
+      - Grupo B · Transformação:
+          - Valores Únicos: 09-obter-valores-unicos.md
+          - Renomear Colunas: 10-renomear-colunas.md
+          - Tipos de Dados: 11-tipos-de-dados.md
+          - Tratar Nulos: 12-tratar-nulos.md
+          - Merge Join: 13-merge-join.md
+          - Coluna Condicional: 14-coluna-condicional.md
 
-  - Grupo C:
-      - Min Max: 15-min-max.md
-      - Datas: 16-extracao-datas.md
-      - Filtrar Data: 17-filtrar-por-data.md
-      - Contar Únicos: 18-contar-unicos.md
-      - Top N: 19-top-n.md
-      - Percentual: 20-percentual.md
+      - Grupo C · Datas e Métricas:
+          - Min Max: 15-min-max.md
+          - Datas: 16-extracao-datas.md
+          - Filtrar por Data: 17-filtrar-por-data.md
+          - Contar Únicos: 18-contar-unicos.md
+          - Top N: 19-top-n.md
+          - Percentual: 20-percentual.md
 
-  - Grupo D:
-      - Ranking: 21-ranking.md
-      - Acumulado: 22-acumulado.md
-      - Janela Móvel: 23-janela-movel.md
-      - Pivot Unpivot: 24-pivot-unpivot.md
+      - Grupo D · Analytics Avançado:
+          - Ranking: 21-ranking.md
+          - Acumulado: 22-acumulado.md
+          - Janela Móvel: 23-janela-movel.md
+          - Pivot / Unpivot: 24-pivot-unpivot.md
 
   - Exemplos:
-      - Excel: examples/excel/README.md
-      - Python: examples/python/README.md
-      - SQL: examples/sql/README.md
-      - Power BI: examples/powerbi/README.md
+      - Excel:
+          - Visão Geral: examples/excel/README.md
+      - Python:
+          - Visão Geral: examples/python/README.md
+      - SQL:
+          - Visão Geral: examples/sql/README.md
+      - Power BI:
+          - Visão Geral: examples/powerbi/README.md
+
+  - Recursos:
+      - Dataset: datasets/employees.md
+      - Roadmap: roadmap.md

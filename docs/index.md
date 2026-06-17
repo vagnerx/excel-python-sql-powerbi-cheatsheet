@@ -22,4 +22,4 @@ Guia prático para profissionais de Dados e Analytics.
 
 https://github.com/vagnerx/excel-python-sql-powerbi-cheatsheet
 
-![QR Code](images/github_qrcode.png)
+![QR Code](assets/github_qrcode.png)
