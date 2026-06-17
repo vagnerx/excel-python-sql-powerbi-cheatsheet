@@ -1,14 +1,8 @@
+![Banner](assets/banner.png)
+
 # Excel → Python → SQL → Power BI Cheat Sheet
 
 Guia prático para profissionais de Dados e Analytics.
-
-## O que você encontrará
-
-- 24 operações de dados
-- Excel
-- Python (Pandas)
-- SQL
-- Power BI (M e DAX)
 
 ## Tecnologias
 
@@ -16,13 +10,16 @@ Guia prático para profissionais de Dados e Analytics.
 | -------- | ------ | -------- | -------- |
 | Fórmulas | Pandas | ANSI SQL | DAX e M  |
 
-## Dataset oficial
+## Conteúdo
 
-- employees.csv
+- 24 operações de dados
+- Exemplos executáveis
+- Datasets para prática
+- Boas práticas
+- Modelagem dimensional
 
-## Repositório
+## Acesse o repositório
 
-GitHub:
 https://github.com/vagnerx/excel-python-sql-powerbi-cheatsheet
 
 ![QR Code](images/github_qrcode.png)

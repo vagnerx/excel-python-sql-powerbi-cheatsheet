@@ -3,16 +3,20 @@ site_description: Guia prático para profissionais de Dados e Analytics
 site_author: Vagner Xavier
 site_url: https://vagnerx.github.io/excel-python-sql-powerbi-cheatsheet/
 
+repo_name: vagnerx/excel-python-sql-powerbi-cheatsheet
+repo_url: https://github.com/vagnerx/excel-python-sql-powerbi-cheatsheet
+
 theme:
   name: material
   language: pt-BR
 
-  logo: docs/assets/logo.png
-  favicon: docs/assets/favicon.png
+  logo: assets/logo.png
+  favicon: assets/favicon.png
 
   palette:
-    primary: blue
-    accent: amber
+    - scheme: default
+      primary: blue
+      accent: amber
 
   features:
     - navigation.instant
@@ -22,6 +26,7 @@ theme:
     - search.suggest
     - search.highlight
     - content.code.copy
+    - toc.follow
 
 plugins:
   - search
