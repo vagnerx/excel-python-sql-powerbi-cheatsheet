@@ -10,4 +10,4 @@ theme:
 plugins:
   - search
 nav:
-  - Início: index.md
+  - Início: docs/ndex.md
