@@ -47,3 +47,16 @@ mkdocs.yml
 docs/index.md
 README_pt-BR.md
 README.md
+
+Os próximos incrementos de maior valor seriam:
+
+Consolidar tudo em um único ZIP final.
+Criar README_pt-BR.md e README.md (inglês).
+Configurar GitHub Pages com MkDocs.
+Adicionar datasets adicionais:
+customers.csv
+orders.csv
+sales.csv
+Criar notebooks Jupyter (.ipynb).
+Gerar QR Code apontando para:
+https://github.com/vagnerx/excel-python-sql-powerbi-cheatsheet
