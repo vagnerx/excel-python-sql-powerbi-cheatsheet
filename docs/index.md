@@ -17,6 +17,9 @@ Inspirado nas clássicas "Cheat Sheets" visuais da área de dados, este projeto 
 ![Cheat Sheet de Referência](assets/reference_image.png)
 *(Imagem de referência original que inspirou este repositório)*
 
+> 👤 **Autor:** [Vagner Xavier](https://www.linkedin.com/in/vxavier/)  
+> 📰 **Artigo Completo:** *(Link para o post do LinkedIn será adicionado aqui em breve)*
+
 ---
 
 ## 🚀 Acesso Rápido às Entregas
