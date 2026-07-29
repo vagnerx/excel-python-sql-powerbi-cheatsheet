@@ -210,9 +210,9 @@ def create_filtros(wb):
         ("Total geral folha",       "=SUM(Dados!F3:F54)"),
     ]
     filtros_dir = [
-        ("COUNTIFS - TI E Ativo",    '=COUNT_xlfn.IFS(Dados!C3:C54,"TI",Dados!H3:H54,"Sim")'),
-        ("SUMIFS - Vendas E Ativo",  '=SUM_xlfn.IFS(Dados!F3:F54,Dados!C3:C54,"Vendas",Dados!H3:H54,"Sim")'),
-        ("AVERAGEIFS - TI E > 5000",    '=AVERAGE_xlfn.IFS(Dados!F3:F54,Dados!C3:C54,"TI",Dados!F3:F54,">5000")'),
+        ("COUNTIFS - TI E Ativo",    '=COUNTIFS(Dados!C3:C54,"TI",Dados!H3:H54,"Sim")'),
+        ("SUMIFS - Vendas E Ativo",  '=SUMIFS(Dados!F3:F54,Dados!C3:C54,"Vendas",Dados!H3:H54,"Sim")'),
+        ("AVERAGEIFS - TI E > 5000",    '=AVERAGEIFS(Dados!F3:F54,Dados!C3:C54,"TI",Dados!F3:F54,">5000")'),
         ("Nome maior salario",        "=INDEX(Dados!B3:B54,MATCH(MAX(Dados!F3:F54),Dados!F3:F54,0))"),
         ("Nome menor salario",        "=INDEX(Dados!B3:B54,MATCH(MIN(Dados!F3:F54),Dados!F3:F54,0))"),
         ("3o maior salario",          "=LARGE(Dados!F3:F54,3)"),
@@ -281,8 +281,8 @@ def create_agrupamento(wb):
             f'=COUNTIF(Dados!C$3:C$54,A{r})',
             f'=SUMIF(Dados!C$3:C$54,A{r},Dados!F$3:F$54)',
             f'=AVERAGEIF(Dados!C$3:C$54,A{r},Dados!F$3:F$54)',
-            f'=MAX_xlfn.IFS(Dados!F$3:F$54,Dados!C$3:C$54,A{r})',
-            f'=MIN_xlfn.IFS(Dados!F$3:F$54,Dados!C$3:C$54,A{r})',
+            f'=_xlfn.MAXIFS(Dados!F$3:F$54,Dados!C$3:C$54,A{r})',
+            f'=_xlfn.MINIFS(Dados!F$3:F$54,Dados!C$3:C$54,A{r})',
             f'=C{r}/C${total_row}',
         ]
         formats = ["General", 'R$ #,##0.00', 'R$ #,##0.00', 'R$ #,##0.00', 'R$ #,##0.00', '0.00%']
