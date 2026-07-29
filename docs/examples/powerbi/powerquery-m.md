@@ -1,10 +1,13 @@
 # Power Query (Linguagem M) — Cheat Sheet
 
-O Power Query é utilizado na fase de extração, transformação e carga (ETL). Aqui estão os equivalentes das operações básicas realizadas via interface ou scripts M.
+> 💡 **OBJETIVO DESTE DOCUMENTO (LEIA ANTES DE USAR):**
+> Este arquivo **NÃO** é um tutorial passo a passo para construir o seu painel. Ele é um **documento de referência**!
+> 
+> O objetivo dele é apenas mostrar como as operações do nosso Cheat Sheet (ex: renomear colunas, fazer joins, criar colunas condicionais) são escritas na linguagem "M" do Power BI por trás da interface gráfica. Você **não precisa** decorar ou digitar esses códigos. Ao clicar nos botões do Power Query, o Power BI escreve esses códigos para você automaticamente.
 
-## 1. Importação de Dados (01)
+---
 
-No Power Query, você raramente escreve M do zero para importar, usa-se a interface. O código gerado é similar a:
+O Power Query é utilizado na fase de extração, transformação e carga (ETL). Abaixo, documentamos as lógicas geradas pela ferramenta para as operações correspondentes.
 
 ```powerquery-m
 // CSV
