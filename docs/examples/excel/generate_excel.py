@@ -10,8 +10,8 @@ Abas geradas:
   Agrupamento    - SUMIF, COUNTIF, AVERAGEIF por departamento
   Datas          - ANO, MES, DIA, TODAY, calculos de tempo
   Condicional    - SE, IFS, IFERROR, coluna de nivel
-  Lookup         - VLOOKUP, XLOOKUP, INDEX+MATCH
-  Metricas       - MIN, MAX, RANK.EQ, LARGE, SUMRPRODUTO
+  Lookup         - VLOOKUP, _xlfn.XLOOKUP, INDEX+MATCH
+  Metricas       - MIN, MAX, RANK, LARGE, SUMRPRODUTO
 
 Execute: python docs/examples/excel/generate_excel.py
 Dataset: datasets/employees.csv, datasets/customers.csv, datasets/orders.csv
@@ -210,9 +210,9 @@ def create_filtros(wb):
         ("Total geral folha",       "=SUM(Dados!F3:F54)"),
     ]
     filtros_dir = [
-        ("COUNTIFS - TI E Ativo",    '=COUNTIFS(Dados!C3:C54,"TI",Dados!H3:H54,"Sim")'),
-        ("SUMIFS - Vendas E Ativo",  '=SUMIFS(Dados!F3:F54,Dados!C3:C54,"Vendas",Dados!H3:H54,"Sim")'),
-        ("AVERAGEIFS - TI E > 5000",    '=AVERAGEIFS(Dados!F3:F54,Dados!C3:C54,"TI",Dados!F3:F54,">5000")'),
+        ("COUNTIFS - TI E Ativo",    '=COUNT_xlfn.IFS(Dados!C3:C54,"TI",Dados!H3:H54,"Sim")'),
+        ("SUMIFS - Vendas E Ativo",  '=SUM_xlfn.IFS(Dados!F3:F54,Dados!C3:C54,"Vendas",Dados!H3:H54,"Sim")'),
+        ("AVERAGEIFS - TI E > 5000",    '=AVERAGE_xlfn.IFS(Dados!F3:F54,Dados!C3:C54,"TI",Dados!F3:F54,">5000")'),
         ("Nome maior salario",        "=INDEX(Dados!B3:B54,MATCH(MAX(Dados!F3:F54),Dados!F3:F54,0))"),
         ("Nome menor salario",        "=INDEX(Dados!B3:B54,MATCH(MIN(Dados!F3:F54),Dados!F3:F54,0))"),
         ("3o maior salario",          "=LARGE(Dados!F3:F54,3)"),
@@ -281,8 +281,8 @@ def create_agrupamento(wb):
             f'=COUNTIF(Dados!C$3:C$54,A{r})',
             f'=SUMIF(Dados!C$3:C$54,A{r},Dados!F$3:F$54)',
             f'=AVERAGEIF(Dados!C$3:C$54,A{r},Dados!F$3:F$54)',
-            f'=MAXIFS(Dados!F$3:F$54,Dados!C$3:C$54,A{r})',
-            f'=MINIFS(Dados!F$3:F$54,Dados!C$3:C$54,A{r})',
+            f'=MAX_xlfn.IFS(Dados!F$3:F$54,Dados!C$3:C$54,A{r})',
+            f'=MIN_xlfn.IFS(Dados!F$3:F$54,Dados!C$3:C$54,A{r})',
             f'=C{r}/C${total_row}',
         ]
         formats = ["General", 'R$ #,##0.00', 'R$ #,##0.00', 'R$ #,##0.00', 'R$ #,##0.00', '0.00%']
@@ -317,9 +317,9 @@ def create_agrupamento(wb):
 
     apply_table_border(ws, 2, total_row, 1, 7)
 
-    # Nota sobre MAXIFS/MINIFS
+    # Nota sobre _xlfn.MAXIFS/_xlfn.MINIFS
     ws.cell(row=total_row+2, column=1,
-            value="Nota: MAXIFS e MINIFS requerem Excel 2019 ou 365. Em versoes mais antigas, use MAX com IFERROR(INDEX...)").font = Font(italic=True, color="595959", size=9)
+            value="Nota: _xlfn.MAXIFS e _xlfn.MINIFS requerem Excel 2019 ou 365. Em versoes mais antigas, use MAX com IFERROR(INDEX...)").font = Font(italic=True, color="595959", size=9)
     ws.merge_cells(f"A{total_row+2}:G{total_row+2}")
 
     print("  [OK] Aba 'Agrupamento' criada")
@@ -367,7 +367,7 @@ def create_datas(wb):
         ("Data + 30 dias",          "=Dados!G3+30"),
         ("Primeiro dia do mes",     "=DATE(YEAR(Dados!G3),MONTH(Dados!G3),1)"),
         ("Ultimo dia do mes",       "=EOMONTH(Dados!G3,0)"),
-        ("Dias entre duas datas",   "=DAYS(TODAY(),Dados!G3)"),
+        ("Dias entre duas datas",   "=_xlfn.DAYS(TODAY(),Dados!G3)"),
         ("Dias uteis entre datas",  "=WORKDAY(Dados!G3,30)"),
         ("Filtrar ano 2023",        '=COUNTIF(Dados!G3:G54,">=01/01/2023")-COUNTIF(Dados!G3:G54,">=01/01/2024")'),
         ("Mais recente admissao",   "=MAX(Dados!G3:G54)"),
@@ -438,7 +438,7 @@ def create_condicional(wb):
 
         # IFS (Excel 2016+)
         cell = ws.cell(row=r, column=5,
-                       value=f'=IFS(C{r}>12000,"Especialista",C{r}>8000,"Senior",C{r}>5000,"Pleno",TRUE,"Junior")')
+                       value=f'=_xlfn.IFS(C{r}>12000,"Especialista",C{r}>8000,"Senior",C{r}>5000,"Pleno",TRUE,"Junior")')
         cell.fill = PatternFill("solid", fgColor="FFF2CC")
         cell.font = Font(size=9)
 
@@ -465,7 +465,7 @@ def create_lookup(wb):
 
     ws.merge_cells("A1:G1")
     cell = ws["A1"]
-    cell.value = "Lookup — VLOOKUP, XLOOKUP, INDEX+MATCH"
+    cell.value = "Lookup — VLOOKUP, _xlfn.XLOOKUP, INDEX+MATCH"
     cell.font = Font(bold=True, size=13, color="1F4E79")
     cell.alignment = Alignment(horizontal="center")
     ws.row_dimensions[1].height = 25
@@ -475,7 +475,7 @@ def create_lookup(wb):
     section_style(ws, 2, 2, "VLOOKUP — Nome")
     section_style(ws, 2, 3, "VLOOKUP — Departamento")
     section_style(ws, 2, 4, "VLOOKUP — Salario")
-    section_style(ws, 2, 5, "XLOOKUP — Cargo")
+    section_style(ws, 2, 5, "_xlfn.XLOOKUP — Cargo")
     section_style(ws, 2, 6, "INDEX+MATCH — Cidade")
     section_style(ws, 2, 7, "IFERROR — seguro")
 
@@ -502,9 +502,9 @@ def create_lookup(wb):
         cell.fill = PatternFill("solid", fgColor="FFF2CC")
         cell.number_format = 'R$ #,##0.00'
 
-        # XLOOKUP (Excel 365 / 2021)
+        # _xlfn.XLOOKUP (Excel 365 / 2021)
         ws.cell(row=r, column=5,
-                value=f'=XLOOKUP(A{r},Dados!$A$3:$A$54,Dados!$D$3:$D$54,"Nao encontrado")').fill = PatternFill("solid", fgColor="E2EFDA")
+                value=f'=_xlfn.XLOOKUP(A{r},Dados!$A$3:$A$54,Dados!$D$3:$D$54,"Nao encontrado")').fill = PatternFill("solid", fgColor="E2EFDA")
 
         # INDEX + MATCH
         ws.cell(row=r, column=6,
@@ -517,7 +517,7 @@ def create_lookup(wb):
     apply_table_border(ws, 2, 3+len(ids)-1, 1, 7)
 
     # Legenda
-    ws.cell(row=12, column=1, value="Amarelo = VLOOKUP  |  Verde = XLOOKUP (Excel 365+)  |  Azul = INDEX+MATCH  |  Vermelho = IFERROR").font = Font(italic=True, color="595959", size=9)
+    ws.cell(row=12, column=1, value="Amarelo = VLOOKUP  |  Verde = _xlfn.XLOOKUP (Excel 365+)  |  Azul = INDEX+MATCH  |  Vermelho = IFERROR").font = Font(italic=True, color="595959", size=9)
     ws.merge_cells("A12:G12")
 
     print("  [OK] Aba 'Lookup' criada")
@@ -534,7 +534,7 @@ def create_metricas(wb):
     cell.alignment = Alignment(horizontal="center")
     ws.row_dimensions[1].height = 25
 
-    headers = ["Nome", "Departamento", "Salario", "Ranking (RANK.EQ)"]
+    headers = ["Nome", "Departamento", "Salario", "Ranking (RANK)"]
     widths  = [22, 16, 14, 20]
     for i, (h, w) in enumerate(zip(headers, widths), start=1):
         header_style(ws, 2, i, h, cor_hex="C55A11")
@@ -556,7 +556,7 @@ def create_metricas(wb):
 
         n_total = len(emp) + 2
         cell = ws.cell(row=r, column=4,
-                       value=f'=RANK.EQ(C{r},$C$3:$C${n_total},0)')
+                       value=f'=RANK(C{r},$C$3:$C${n_total},0)')
         cell.fill = PatternFill("solid", fgColor="FFF2CC")
 
     n = len(emp) + 2
@@ -575,7 +575,7 @@ def create_metricas(wb):
         ("Mediana",            "=MEDIAN($C$3:$C$54)"),
         ("Desvio Padrao",      "=STDEV($C$3:$C$54)"),
         ("% acima da media",   "=COUNTIF($C$3:$C$54,\">\"&AVERAGE($C$3:$C$54))/COUNTA($C$3:$C$54)"),
-        ("Folha top 10",       "=SUMRPRODUTO(LARGE($C$3:$C$54,{1,2,3,4,5,6,7,8,9,10}))"),
+        ("Folha top 3",       "=SUMRPRODUTO(LARGE($C$3:$C$54,{1,2,3,4,5,6,7,8,9,10}))"),
     ]
     for i, (label, form) in enumerate(metricas, start=3):
         ws.cell(row=i, column=6, value=label).font = Font(size=10)
