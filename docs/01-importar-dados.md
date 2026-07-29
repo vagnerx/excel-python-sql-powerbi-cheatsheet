@@ -1,58 +1,102 @@
-# Importar Dados
+# 1. Importar Dados
 
-## Explicação Conceitual
-Trazer dados para análise a partir de arquivos, APIs ou bancos.
+> **Tarefa:** Carregar dados de arquivos externos para análise.  
+> **Dataset:** `datasets/employees.csv`
 
-## Dataset Utilizado
-`datasets/employees.csv`
+---
 
 ## Excel
-**Interface:** Dados → Filtro/Classificar/Tabela Dinâmica
 
-**Exemplo PT-BR:**
-- Soma: `=SOMA(G:G)`
-- Média: `=MÉDIA(E:E)`
-- Contagem: `=CONT.VALORES(A:A)`
+**Caminho:** Dados → Obter Dados → De Arquivo → Do CSV/Excel  
+Ou simplesmente arraste o arquivo para o Excel e use **Power Query**.
+
+```
+Dados → Obter e Transformar Dados → De Texto/CSV
+```
+
+**Fórmulas úteis após importar:**
+```excel
+=SOMA(F:F)           → soma de todos os salários
+=MÉDIA(F:F)          → média salarial
+=CONT.VALORES(A:A)   → quantidade de registros
+```
+
+---
 
 ## Python (Pandas)
+
 ```python
 import pandas as pd
+
+# Importar CSV
 df = pd.read_csv("datasets/employees.csv")
-resultado = pd.read_csv('datasets/employees.csv')
-print(resultado)
+
+# Importar Excel
+df_excel = pd.read_excel("datasets/employees.xlsx")
+
+# Primeiras linhas
+print(df.head())
+
+# Informações gerais
+print(df.info())
+print(df.shape)   # (linhas, colunas)
 ```
+
+---
 
 ## SQL
+
 ```sql
+-- Selecionar tudo da tabela
 SELECT * FROM employees;
+
+-- Ver estrutura (SQLite)
+PRAGMA table_info(employees);
+
+-- Primeiros 5 registros
+SELECT * FROM employees LIMIT 5;
 ```
 
-Compatível com PostgreSQL e SQL Server.
+---
 
-## Power BI
-**Implementação:** `Obter Dados (M)`
+## Power BI (M — Power Query)
 
-### M ou DAX?
-- **M (Power Query):** ETL e transformação.
-- **DAX:** medidas, KPIs e análise.
+```
+Página Inicial → Obter Dados → Texto/CSV
+```
 
-## Quando usar
-- Importação é o primeiro passo de qualquer pipeline.
-- Dashboards
-- Exploração de dados
+**Código M equivalente:**
+```powerquery-m
+let
+    Fonte = Csv.Document(
+        File.Contents("C:\datasets\employees.csv"),
+        [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.None]
+    ),
+    PromoveuCabeçalhos = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true])
+in
+    PromoveuCabeçalhos
+```
+
+---
+
+## Quando usar?
+
+| Ferramenta | Use quando... |
+|---|---|
+| Excel | Análise pontual, arquivos pequenos |
+| Python | Automação, grandes volumes, pipelines |
+| SQL | Dados já persistidos em banco |
+| Power BI | Dashboards e relatórios visuais |
+
+---
 
 ## Armadilhas comuns
-- Ignorar valores nulos.
-- Misturar tipos de dados.
-- Aplicar agregações incorretas.
 
-## Diferenças entre ferramentas
-- Excel: interface visual.
-- Python: automação e escala.
-- SQL: dados persistidos.
-- Power BI: visualização e modelagem.
+- **Encoding:** arquivos com acentos precisam de `encoding="utf-8"` no Python
+- **Tipos automáticos:** o Pandas pode inferir tipos errados — valide com `df.dtypes`
+- **Cabeçalho:** verifique se a primeira linha é realmente o cabeçalho
 
 ## Veja também
-- Merge/Join
-- Tratar Nulos
-- Top N
+- [Filtrar Linhas](02-filtrar-linhas.md)
+- [Tratar Nulos](12-tratar-nulos.md)
+- [Tipos de Dados](11-tipos-de-dados.md)

@@ -1,25 +1,51 @@
-![Banner](assets/banner.png)
+# O Guia Definitivo: Excel → Python → SQL → Power BI
 
-# Excel → Python → SQL → Power BI Cheat Sheet
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python Pandas](https://img.shields.io/badge/Python-Pandas-blue?logo=python&logoColor=white)](examples/python/)
+[![SQL](https://img.shields.io/badge/SQL-Window%20Functions-orange?logo=sqlite&logoColor=white)](examples/sql/)
+[![Power BI](https://img.shields.io/badge/Power_BI-DAX_%7C_M-yellow?logo=powerbi&logoColor=black)](examples/powerbi/)
+[![Excel](https://img.shields.io/badge/Excel-Formulas-brightgreen?logo=microsoftexcel&logoColor=white)](examples/excel/)
 
-Guia prático para profissionais de Dados e Analytics.
+Este repositório é o guia prático e executável definitivo para profissionais de Dados e Analytics que desejam traduzir seus conhecimentos entre as principais ferramentas do mercado.
 
-## Tecnologias
+---
 
-| Excel    | Python | SQL      | Power BI |
-| -------- | ------ | -------- | -------- |
-| Fórmulas | Pandas | ANSI SQL | DAX e M  |
+## 🎯 Objetivo
 
-## Conteúdo
+Inspirado nas clássicas "Cheat Sheets" visuais da área de dados, este projeto vai além da imagem. Ele oferece os **códigos práticos, explicados e testados** para 24 operações fundamentais de análise, transformando teoria visual em scripts prontos para rodar no seu dia a dia.
 
-- 24 operações de dados
-- Exemplos executáveis
-- Datasets para prática
-- Boas práticas
-- Modelagem dimensional
+![Cheat Sheet de Referência](assets/reference_image.png)
+*(Imagem de referência original que inspirou este repositório)*
 
-## Acesse o repositório
+---
 
-https://github.com/vagnerx/excel-python-sql-powerbi-cheatsheet
+## 🚀 Acesso Rápido às Entregas
 
-![QR Code](assets/github_qrcode.png)
+Tudo o que você precisa para praticar localmente:
+
+### 1. [Dataset Prático](datasets/employees.md)
+Três datasets inter-relacionados (Employees, Customers, Orders) para treinar as operações.
+
+### 2. [Exemplos em Python (Pandas)](examples/python/)
+- Scripts `.py` completos para cada grupo de operações.
+- Notebook interativo `.ipynb` (com botão para abrir direto no Google Colab).
+
+### 3. [Exemplos em SQL](examples/sql/) *(Em breve / Trabalho em andamento)*
+- Banco de dados SQLite `.db` populado.
+- Scripts com agregações complexas e *Window Functions*.
+
+### 4. [Exemplos em Excel](examples/excel/)
+- Planilha completa gerada com as 24 lógicas já montadas em células, formatadas e comentadas.
+
+### 5. [Exemplos em Power BI](examples/powerbi/)
+- Modelagem *Star Schema* documentada.
+- Linguagem M e *Time Intelligence*.
+- Código limpo de todas as métricas DAX.
+
+---
+
+## 📖 Como navegar neste site
+
+Use o menu lateral (ou o ícone de hambúrguer no celular) para navegar pelas 24 operações detalhadas. Cada página foca em uma tarefa específica e mostra como executá-la nas 4 tecnologias lado a lado, apontando armadilhas e boas práticas.
+
+*Seja bem-vindo e bons estudos!*

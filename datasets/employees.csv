@@ -1,0 +1,53 @@
+id,nome,departamento,cargo,cidade,salario,data_admissao,ativo
+1,Ana,Operações,Analista Operações,Porto Alegre,2955.07,2021-01-31,Sim
+2,Carlos,,Analista Financeiro,Brasília,4842.67,2020-06-14,Sim
+3,João,Vendas,Key Account,Porto Alegre,8303.39,2018-01-27,Sim
+4,Maria,RH,Analista RH,Salvador,4102.85,2019-02-01,Sim
+5,Pedro,Financeiro,Analista Financeiro,Salvador,,2025-01-18,Sim
+6,Fernanda,RH,Analista RH,Manaus,9059.57,2019-02-18,Sim
+7,Lucas,RH,Analista RH,Curitiba,7459.35,2019-12-02,Sim
+8,Juliana,Marketing,Designer,São Paulo,,2018-08-18,Sim
+9,Rafael,Marketing,Copywriter,Manaus,4701.01,2023-08-07,Sim
+10,Camila,Operações,Gerente Ops,Porto Alegre,,2022-06-24,Sim
+11,Bruno,Operações,Supervisor,Fortaleza,7710.89,2022-09-26,Sim
+12,Larissa,TI,Analista,Salvador,13862.23,2024-01-09,Sim
+13,Diego,Operações,Coordenador,Rio de Janeiro,8825.71,2020-01-02,Sim
+14,Patrícia,Vendas,SDR,Recife,9862.6,2024-01-19,Não
+15,Thiago,RH,Recruiter,Rio de Janeiro,,2020-09-13,Não
+16,Renata,Vendas,Gerente de Contas,Recife,8937.76,2024-03-01,Sim
+17,Felipe,Operações,Supervisor,Salvador,7220.28,2022-06-23,Não
+18,Daniela,,Analista RH,São Paulo,7324.01,2020-07-31,Sim
+19,Rodrigo,RH,Analista RH,Curitiba,6842.01,2021-02-14,Sim
+20,Amanda,Vendas,Key Account,Fortaleza,10267.47,,Sim
+21,Gustavo,Operações,Analista Operações,Rio de Janeiro,3175.8,2021-10-21,Sim
+22,Vanessa,RH,Gerente RH,Recife,5123.74,,Sim
+23,Eduardo,TI,Desenvolvedor,Fortaleza,,2023-06-13,Sim
+24,Aline,Financeiro,Tesoureiro,Manaus,9364.59,2024-03-26,Sim
+25,Marcos,Marketing,Analista Marketing,Manaus,8983.8,2018-08-23,Sim
+26,Cristina,TI,Desenvolvedor,Curitiba,5890.78,2018-10-06,Sim
+27,Leonardo,TI,Analista,Salvador,10449.92,2024-07-18,Sim
+28,Priscila,,Controller,Rio de Janeiro,12224.44,2021-05-13,Sim
+29,André,Marketing,Designer,Rio de Janeiro,7047.08,2019-06-27,Não
+30,Tatiana,Operações,Coordenador,Recife,6592.4,2025-05-02,Sim
+31,Vinícius,TI,Analista,Brasília,14651.42,2019-09-29,Sim
+32,Mariana,Marketing,,Fortaleza,5008.97,2018-07-28,Sim
+33,Leandro,,,Recife,8318.0,2024-03-09,Sim
+34,Beatriz,Marketing,Analista Marketing,Fortaleza,9676.76,2024-07-13,Sim
+35,Ricardo,TI,Arquiteto,Salvador,7730.99,2020-10-19,Sim
+36,Érica,Vendas,Gerente de Contas,São Paulo,10781.45,2019-12-27,Não
+37,Matheus,Operações,Supervisor,São Paulo,4454.2,2019-03-19,Sim
+38,Letícia,RH,,Salvador,4949.0,2025-05-27,Sim
+39,Fábio,Marketing,Gestor Tráfego,São Paulo,8436.14,2024-01-06,Sim
+40,Natália,RH,Analista RH,Salvador,4204.62,2022-11-15,Sim
+41,Henrique,Vendas,SDR,Recife,3399.48,2022-11-22,Sim
+42,Sabrina,Financeiro,Analista Financeiro,Rio de Janeiro,15412.06,2021-09-14,Sim
+43,Igor,Financeiro,Tesoureiro,Fortaleza,10875.74,2020-02-25,Sim
+44,Carla,Marketing,Analista Marketing,Brasília,5431.0,2020-05-10,Sim
+45,Otávio,Marketing,Gestor Tráfego,Belo Horizonte,9349.88,2019-11-27,Sim
+46,Simone,Vendas,SDR,São Paulo,5021.77,,Sim
+47,Gabriel,Financeiro,Controller,Curitiba,12760.98,2022-04-22,Sim
+48,Mônica,TI,DBA,Recife,7844.93,2023-10-23,Sim
+49,Marcelo,Operações,Coordenador,Recife,8690.25,2022-12-18,Sim
+50,Helena,Financeiro,Contador,Belo Horizonte,7480.7,2020-10-09,Sim
+51,Pedro,Financeiro,Analista Financeiro,Salvador,,2025-01-18,Sim
+52,Larissa,TI,Analista,Salvador,13862.23,2024-01-09,Sim

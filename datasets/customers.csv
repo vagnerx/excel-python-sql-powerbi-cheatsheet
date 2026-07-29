@@ -1,0 +1,21 @@
+id_cliente,nome,cidade,segmento,data_cadastro
+1,Alpha Comercial,Rio de Janeiro,PME,2021-08-18
+2,Beta Distribuidora,Belo Horizonte,PME,2022-08-02
+3,Gamma Tech,Recife,Varejo,2020-07-20
+4,Delta Serviços,Porto Alegre,Corporativo,2023-04-18
+5,Epsilon Logística,Porto Alegre,Corporativo,2019-09-21
+6,Zeta Consultoria,Fortaleza,Governo,2022-09-17
+7,Eta Importadora,Recife,Governo,2023-08-31
+8,Theta Varejo,São Paulo,Corporativo,2023-09-17
+9,Iota Indústrias,Fortaleza,Internacional,2019-03-22
+10,Kappa Saúde,Brasília,Governo,2024-05-07
+11,Lambda Educação,São Paulo,PME,2022-05-08
+12,Mu Financeira,Fortaleza,Governo,2025-01-13
+13,Nu Agropecuária,Recife,Internacional,2021-06-22
+14,Xi Construção,Manaus,Corporativo,2022-01-22
+15,Omicron Telecom,Fortaleza,Governo,2019-04-29
+16,Pi Energia,Fortaleza,PME,2023-07-15
+17,Rho Seguros,Porto Alegre,Governo,2020-06-06
+18,Sigma Alimentos,Brasília,Internacional,2019-04-21
+19,Tau Farmácia,Fortaleza,Internacional,2025-04-30
+20,Upsilon Moda,São Paulo,Varejo,2023-10-22

@@ -1,2 +1,0 @@
-SELECT * FROM employees;
-SELECT name,salary FROM employees;
