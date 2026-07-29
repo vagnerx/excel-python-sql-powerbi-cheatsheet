@@ -30,9 +30,10 @@ Três datasets inter-relacionados (Employees, Customers, Orders) para treinar as
 - Scripts `.py` completos para cada grupo de operações.
 - Notebook interativo `.ipynb` (com botão para abrir direto no Google Colab).
 
-### 3. [Exemplos em SQL](examples/sql/) *(Em breve / Trabalho em andamento)*
-- Banco de dados SQLite `.db` populado.
-- Scripts com agregações complexas e *Window Functions*.
+### 3. [Exemplos em SQL](examples/sql/)
+- Banco de dados SQLite `.db` populado e pronto para uso.
+- Scripts SQL demonstrando agregações, *JOINs*, cruzamentos e *Window Functions*.
+- Integração e uso via Python/Pandas para exibir os resultados diretamente.
 
 ### 4. [Exemplos em Excel](examples/excel/)
 - Planilha completa gerada com as 24 lógicas já montadas em células, formatadas e comentadas.
