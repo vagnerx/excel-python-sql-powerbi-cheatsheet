@@ -374,7 +374,7 @@ def create_datas(wb):
         ("Primeiro dia do mes",     "=DATE(YEAR(Dados!G3),MONTH(Dados!G3),1)"),
         ("Ultimo dia do mes",       "=EOMONTH(Dados!G3,0)"),
         ("Dias entre duas datas",   "=_xlfn.DAYS(TODAY(),Dados!G3)"),
-        ("Dias uteis entre datas",  "=WORKDAY(Dados!G3,30)"),
+        ("Data + 30 dias uteis",    "=WORKDAY(Dados!G3,30)"),
         ("Filtrar ano 2023",        '=COUNTIF(Dados!G3:G54,">=01/01/2023")-COUNTIF(Dados!G3:G54,">=01/01/2024")'),
         ("Mais recente admissao",   "=MAX(Dados!G3:G54)"),
     ]
@@ -394,7 +394,7 @@ def create_datas(wb):
         cell = ws.cell(row=i, column=6, value=form)
         cell.fill = PatternFill("solid", fgColor="E2EFDA")
         cell.font = Font(size=10)
-        if desc in ["Data + 30 dias", "Primeiro dia do mes", "Ultimo dia do mes", "Mais recente admissao"]:
+        if desc in ["Data + 30 dias", "Data + 30 dias uteis", "Primeiro dia do mes", "Ultimo dia do mes", "Mais recente admissao"]:
             cell.number_format = "DD/MM/YYYY"
         elif "anos" in desc.lower():
             cell.number_format = "0.0"
