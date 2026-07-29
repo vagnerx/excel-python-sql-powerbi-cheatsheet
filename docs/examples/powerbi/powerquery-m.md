@@ -36,11 +36,12 @@ Fonte = Excel.Workbook(File.Contents("C:\caminho\arquivo.xlsx"), null, true)
 
 Se você precisar cruzar dados no Power Query, **não é necessário escrever código M**. Faça 100% pela interface gráfica:
 
-1. Selecione a tabela principal (ex: `orders`).
-2. Na guia **Página Inicial**, clique em **Mesclar Consultas**.
-3. Selecione a segunda tabela (ex: `customers`) e clique nas colunas de ligação (ex: `id_cliente`) em ambas as pré-visualizações.
-4. Escolha o **Tipo de Junção** (ex: *Externa Esquerda / Left Outer*).
-5. Após dar OK, clique no botão de "setas duplas" (Expandir) no cabeçalho da nova coluna gerada para escolher quais campos da segunda tabela você quer manter.
+1. Na tela principal do Power BI, clique em **Transformar Dados** para abrir a janela do *Editor do Power Query*.
+2. No painel esquerdo, selecione a tabela principal (ex: `orders`).
+3. Na guia **Página Inicial** do *Editor do Power Query*, procure o botão **Mesclar Consultas** (lado direito superior) e clique nele.
+4. Selecione a segunda tabela (ex: `customers`) e clique nas colunas de ligação (ex: `id_cliente`) em ambas as pré-visualizações.
+5. Escolha o **Tipo de Junção** (ex: *Externa Esquerda / Left Outer*).
+6. Após dar OK, clique no botão de "setas duplas" (Expandir) no cabeçalho da nova coluna gerada para escolher quais campos da segunda tabela você quer manter.
 
 Por trás dos panos, o Power BI vai gerar este código M automaticamente no **Editor Avançado**:
 
