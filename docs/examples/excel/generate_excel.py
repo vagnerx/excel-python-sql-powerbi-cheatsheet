@@ -7,11 +7,11 @@ e formulas Excel prontas para estudo.
 Abas geradas:
   Dados          - dataset employees raw + formatacao
   Filtros        - exemplos de filtros com formulas
-  Agrupamento    - SOMASE, CONT.SE, MEDIASE por departamento
-  Datas          - ANO, MES, DIA, HOJE, calculos de tempo
-  Condicional    - SE, IFS, SEERRO, coluna de nivel
-  Lookup         - PROCV, PROCX, INDICE+CORRESP
-  Metricas       - MIN, MAX, ORDEM.EQ, GRANDE, SOMARPRODUTO
+  Agrupamento    - SUMIF, COUNTIF, AVERAGEIF por departamento
+  Datas          - ANO, MES, DIA, TODAY, calculos de tempo
+  Condicional    - SE, IFS, IFERROR, coluna de nivel
+  Lookup         - VLOOKUP, XLOOKUP, INDEX+MATCH
+  Metricas       - MIN, MAX, RANK.EQ, LARGE, SUMRPRODUTO
 
 Execute: python docs/examples/excel/generate_excel.py
 Dataset: datasets/employees.csv, datasets/customers.csv, datasets/orders.csv
@@ -152,20 +152,20 @@ def create_dados(wb):
     ws.column_dimensions["M"].width = 16
 
     resumo = [
-        ("Total de funcionarios",   "=CONT.VALORES(A3:A54)"),
-        ("Total de funcionarios ativos", '=CONT.SE(H3:H54,"Sim")'),
-        ("Salario medio",           "=MEDIA(F3:F54)"),
-        ("Maior salario",           "=MAXIMO(F3:F54)"),
-        ("Menor salario",           "=MINIMO(F3:F54)"),
-        ("Folha total",             "=SOMA(F3:F54)"),
-        ("Nulos em salario",        "=CONT.VALORES(F3:F54)-CONT.NUM(F3:F54)"),
+        ("Total de funcionarios",   "=COUNTA(A3:A54)"),
+        ("Total de funcionarios ativos", '=COUNTIF(H3:H54,"Sim")'),
+        ("Salario medio",           "=AVERAGE(F3:F54)"),
+        ("Maior salario",           "=MAX(F3:F54)"),
+        ("Menor salario",           "=MIN(F3:F54)"),
+        ("Folha total",             "=SUM(F3:F54)"),
+        ("Nulos em salario",        "=COUNTA(F3:F54)-COUNT(F3:F54)"),
     ]
     for i, (label, formula) in enumerate(resumo, start=3):
         ws.cell(row=i, column=10, value=label).font = Font(size=10)
         cell = ws.cell(row=i, column=11, value=formula)
         cell.fill = PatternFill("solid", fgColor="FFF2CC")
         cell.font = Font(bold=True)
-        if "MEDIA" in formula or "MAXIMO" in formula or "MINIMO" in formula or "SOMA" in formula:
+        if "AVERAGE" in formula or "MAX" in formula or "MIN" in formula or "SUM" in formula:
             cell.number_format = 'R$ #,##0.00'
 
     ws.row_dimensions[2].height = 20
@@ -198,28 +198,28 @@ def create_filtros(wb):
     section_style(ws, 2, 6, "Formula Excel")
 
     filtros_esq = [
-        ("Contar TI",               '=CONT.SE(Dados!C3:C54,"TI")'),
-        ("Contar ativos",           '=CONT.SE(Dados!H3:H54,"Sim")'),
-        ("Contar salario > 8000",   "=CONT.SE(Dados!F3:F54,\">8000\")"),
-        ("Contar nulos salario",    "=CONT.VALORES(Dados!F3:F54)-CONT.NUM(Dados!F3:F54)"),
-        ("Soma salario TI",         '=SOMASE(Dados!C3:C54,"TI",Dados!F3:F54)'),
-        ("Soma salario > 5000",     '=SOMASE(Dados!F3:F54,">5000",Dados!F3:F54)'),
-        ("Media TI",                '=MEDIASE(Dados!C3:C54,"TI",Dados!F3:F54)'),
-        ("Valor min salario",       "=MINIMO(Dados!F3:F54)"),
-        ("Valor max salario",       "=MAXIMO(Dados!F3:F54)"),
-        ("Total geral folha",       "=SOMA(Dados!F3:F54)"),
+        ("Contar TI",               '=COUNTIF(Dados!C3:C54,"TI")'),
+        ("Contar ativos",           '=COUNTIF(Dados!H3:H54,"Sim")'),
+        ("Contar salario > 8000",   "=COUNTIF(Dados!F3:F54,\">8000\")"),
+        ("Contar nulos salario",    "=COUNTA(Dados!F3:F54)-COUNT(Dados!F3:F54)"),
+        ("Soma salario TI",         '=SUMIF(Dados!C3:C54,"TI",Dados!F3:F54)'),
+        ("Soma salario > 5000",     '=SUMIF(Dados!F3:F54,">5000",Dados!F3:F54)'),
+        ("Media TI",                '=AVERAGEIF(Dados!C3:C54,"TI",Dados!F3:F54)'),
+        ("Valor min salario",       "=MIN(Dados!F3:F54)"),
+        ("Valor max salario",       "=MAX(Dados!F3:F54)"),
+        ("Total geral folha",       "=SUM(Dados!F3:F54)"),
     ]
     filtros_dir = [
-        ("CONT.SES - TI E Ativo",    '=CONT.SES(Dados!C3:C54,"TI",Dados!H3:H54,"Sim")'),
-        ("SOMASES - Vendas E Ativo",  '=SOMASES(Dados!F3:F54,Dados!C3:C54,"Vendas",Dados!H3:H54,"Sim")'),
-        ("MEDIASES - TI E > 5000",    '=MEDIASES(Dados!F3:F54,Dados!C3:C54,"TI",Dados!F3:F54,">5000")'),
-        ("Nome maior salario",        "=INDICE(Dados!B3:B54,CORRESP(MAXIMO(Dados!F3:F54),Dados!F3:F54,0))"),
-        ("Nome menor salario",        "=INDICE(Dados!B3:B54,CORRESP(MINIMO(Dados!F3:F54),Dados!F3:F54,0))"),
-        ("3o maior salario",          "=GRANDE(Dados!F3:F54,3)"),
-        ("3o menor salario",          "=PEQUENO(Dados!F3:F54,3)"),
-        ("Unicos departamentos",      "=SOMARPRODUTO(1/CONT.SE(Dados!C3:C53,Dados!C3:C53))"),
-        ("% salario > 8000",         "=CONT.SE(Dados!F3:F54,\">8000\")/CONT.VALORES(Dados!F3:F54)"),
-        ("Folha ativos",              '=SOMASE(Dados!H3:H54,"Sim",Dados!F3:F54)'),
+        ("COUNTIFS - TI E Ativo",    '=COUNTIFS(Dados!C3:C54,"TI",Dados!H3:H54,"Sim")'),
+        ("SUMIFS - Vendas E Ativo",  '=SUMIFS(Dados!F3:F54,Dados!C3:C54,"Vendas",Dados!H3:H54,"Sim")'),
+        ("AVERAGEIFS - TI E > 5000",    '=AVERAGEIFS(Dados!F3:F54,Dados!C3:C54,"TI",Dados!F3:F54,">5000")'),
+        ("Nome maior salario",        "=INDEX(Dados!B3:B54,MATCH(MAX(Dados!F3:F54),Dados!F3:F54,0))"),
+        ("Nome menor salario",        "=INDEX(Dados!B3:B54,MATCH(MIN(Dados!F3:F54),Dados!F3:F54,0))"),
+        ("3o maior salario",          "=LARGE(Dados!F3:F54,3)"),
+        ("3o menor salario",          "=SMALL(Dados!F3:F54,3)"),
+        ("Unicos departamentos",      "=SUMRPRODUTO(1/COUNTIF(Dados!C3:C53,Dados!C3:C53))"),
+        ("% salario > 8000",         "=COUNTIF(Dados!F3:F54,\">8000\")/COUNTA(Dados!F3:F54)"),
+        ("Folha ativos",              '=SUMIF(Dados!H3:H54,"Sim",Dados!F3:F54)'),
     ]
 
     for i, (desc, form) in enumerate(filtros_esq, start=3):
@@ -227,7 +227,7 @@ def create_filtros(wb):
         cell = ws.cell(row=i, column=2, value=form)
         cell.fill = PatternFill("solid", fgColor="FFF2CC")
         cell.font = Font(size=10)
-        if "MEDIA" in form or "SOMA" in form or "MIN" in form or "MAX" in form or "GRANDE" in form:
+        if "AVERAGE" in form or "SUM" in form or "MIN" in form or "MAX" in form or "LARGE" in form:
             cell.number_format = 'R$ #,##0.00'
         if "%" in desc:
             cell.number_format = '0.0%'
@@ -237,7 +237,7 @@ def create_filtros(wb):
         cell = ws.cell(row=i, column=6, value=form)
         cell.fill = PatternFill("solid", fgColor="E2EFDA")
         cell.font = Font(size=10)
-        if "MEDIA" in form or "SOMA" in form or "GRANDE" in form or "PEQUENO" in form:
+        if "AVERAGE" in form or "SUM" in form or "LARGE" in form or "SMALL" in form:
             cell.number_format = 'R$ #,##0.00'
         if "%" in desc:
             cell.number_format = '0.0%'
@@ -278,11 +278,11 @@ def create_agrupamento(wb):
         ws.cell(row=r, column=1, value=dept).font = Font(bold=True, size=10)
 
         formulas = [
-            f'=CONT.SE(Dados!C$3:C$54,A{r})',
-            f'=SOMASE(Dados!C$3:C$54,A{r},Dados!F$3:F$54)',
-            f'=MEDIASE(Dados!C$3:C$54,A{r},Dados!F$3:F$54)',
-            f'=MAXSES(Dados!F$3:F$54,Dados!C$3:C$54,A{r})',
-            f'=MINSES(Dados!F$3:F$54,Dados!C$3:C$54,A{r})',
+            f'=COUNTIF(Dados!C$3:C$54,A{r})',
+            f'=SUMIF(Dados!C$3:C$54,A{r},Dados!F$3:F$54)',
+            f'=AVERAGEIF(Dados!C$3:C$54,A{r},Dados!F$3:F$54)',
+            f'=MAXIFS(Dados!F$3:F$54,Dados!C$3:C$54,A{r})',
+            f'=MINIFS(Dados!F$3:F$54,Dados!C$3:C$54,A{r})',
             f'=C{r}/C${total_row}',
         ]
         formats = ["General", 'R$ #,##0.00', 'R$ #,##0.00', 'R$ #,##0.00', 'R$ #,##0.00', '0.00%']
@@ -302,12 +302,12 @@ def create_agrupamento(wb):
     ws.cell(row=total_row, column=1).font = Font(bold=True, color="FFFFFF")
 
     totais = [
-        (2, f'=SOMA(B3:B{total_row-1})', "General"),
-        (3, f'=SOMA(C3:C{total_row-1})', 'R$ #,##0.00'),
-        (4, f'=MEDIA(Dados!F3:F54)',      'R$ #,##0.00'),
-        (5, f'=MAXIMO(Dados!F3:F54)',     'R$ #,##0.00'),
-        (6, f'=MINIMO(Dados!F3:F54)',     'R$ #,##0.00'),
-        (7, "=SOMA(G3:G8)",               '0.00%'),
+        (2, f'=SUM(B3:B{total_row-1})', "General"),
+        (3, f'=SUM(C3:C{total_row-1})', 'R$ #,##0.00'),
+        (4, f'=AVERAGE(Dados!F3:F54)',      'R$ #,##0.00'),
+        (5, f'=MAX(Dados!F3:F54)',     'R$ #,##0.00'),
+        (6, f'=MIN(Dados!F3:F54)',     'R$ #,##0.00'),
+        (7, "=SUM(G3:G8)",               '0.00%'),
     ]
     for col, form, fmt in totais:
         cell = ws.cell(row=total_row, column=col, value=form)
@@ -317,9 +317,9 @@ def create_agrupamento(wb):
 
     apply_table_border(ws, 2, total_row, 1, 7)
 
-    # Nota sobre MAXSES/MINSES
+    # Nota sobre MAXIFS/MINIFS
     ws.cell(row=total_row+2, column=1,
-            value="Nota: MAXSES e MINSES requerem Excel 2019 ou 365. Em versoes mais antigas, use MAXIMO com SEERRO(INDICE...)").font = Font(italic=True, color="595959", size=9)
+            value="Nota: MAXIFS e MINIFS requerem Excel 2019 ou 365. Em versoes mais antigas, use MAX com IFERROR(INDEX...)").font = Font(italic=True, color="595959", size=9)
     ws.merge_cells(f"A{total_row+2}:G{total_row+2}")
 
     print("  [OK] Aba 'Agrupamento' criada")
@@ -349,28 +349,28 @@ def create_datas(wb):
     section_style(ws, 2, 6, "Formula")
 
     formulas_basicas = [
-        ("Extrair Ano",             "=ANO(Dados!G3)"),
-        ("Extrair Mes",             "=MES(Dados!G3)"),
-        ("Extrair Dia",             "=DIA(Dados!G3)"),
-        ("Nome do Mes",             '=TEXTO(Dados!G3,"MMMM")'),
-        ("Dia da Semana (nome)",    '=TEXTO(Dados!G3,"DDDD")'),
-        ("Numero dia semana",       "=DIA.DA.SEMANA(Dados!G3,2)"),
-        ("Trimestre",               "=INT((MES(Dados!G3)-1)/3)+1"),
-        ("Semana do ano",           "=NUM.SEMANA(Dados!G3,2)"),
-        ("Hoje",                    "=HOJE()"),
-        ("Agora",                   "=AGORA()"),
+        ("Extrair Ano",             "=YEAR(Dados!G3)"),
+        ("Extrair Mes",             "=MONTH(Dados!G3)"),
+        ("Extrair Dia",             "=DAY(Dados!G3)"),
+        ("Nome do Mes",             '=TEXT(Dados!G3,"MMMM")'),
+        ("Dia da Semana (nome)",    '=TEXT(Dados!G3,"DDDD")'),
+        ("Numero dia semana",       "=WEEKDAY(Dados!G3,2)"),
+        ("Trimestre",               "=INT((MONTH(Dados!G3)-1)/3)+1"),
+        ("Semana do ano",           "=WEEKNUM(Dados!G3,2)"),
+        ("Hoje",                    "=TODAY()"),
+        ("Agora",                   "=NOW()"),
     ]
     formulas_avancadas = [
-        ("Tempo de casa (dias)",    "=HOJE()-Dados!G3"),
-        ("Tempo de casa (anos)",    "=FRAÇÃO.ANO(Dados!G3,HOJE())"),
-        ("Tempo de casa (meses)",   "=DATAM(Dados!G3,0)"),
+        ("Tempo de casa (dias)",    "=TODAY()-Dados!G3"),
+        ("Tempo de casa (anos)",    "=FRAÇÃO.YEAR(Dados!G3,TODAY())"),
+        ("Tempo de casa (meses)",   "=EDATE(Dados!G3,0)"),
         ("Data + 30 dias",          "=Dados!G3+30"),
-        ("Primeiro dia do mes",     "=DATA(ANO(Dados!G3),MES(Dados!G3),1)"),
-        ("Ultimo dia do mes",       "=FIMMÊS(Dados!G3,0)"),
-        ("Dias entre duas datas",   "=DIAS(HOJE(),Dados!G3)"),
-        ("Dias uteis entre datas",  "=DIATRABALHO(Dados!G3,30)"),
-        ("Filtrar ano 2023",        '=CONT.SE(Dados!G3:G54,">=01/01/2023")-CONT.SE(Dados!G3:G54,">=01/01/2024")'),
-        ("Mais recente admissao",   "=MAXIMO(Dados!G3:G54)"),
+        ("Primeiro dia do mes",     "=DATE(YEAR(Dados!G3),MONTH(Dados!G3),1)"),
+        ("Ultimo dia do mes",       "=EOMONTH(Dados!G3,0)"),
+        ("Dias entre duas datas",   "=DAYS(TODAY(),Dados!G3)"),
+        ("Dias uteis entre datas",  "=WORKDAY(Dados!G3,30)"),
+        ("Filtrar ano 2023",        '=COUNTIF(Dados!G3:G54,">=01/01/2023")-COUNTIF(Dados!G3:G54,">=01/01/2024")'),
+        ("Mais recente admissao",   "=MAX(Dados!G3:G54)"),
     ]
 
     for i, (desc, form) in enumerate(formulas_basicas, start=3):
@@ -378,9 +378,9 @@ def create_datas(wb):
         cell = ws.cell(row=i, column=2, value=form)
         cell.fill = PatternFill("solid", fgColor="FFF2CC")
         cell.font = Font(size=10)
-        if "HOJE" in form and "CONT" not in form:
+        if "TODAY" in form and "CONT" not in form:
             cell.number_format = "DD/MM/YYYY"
-        if "AGORA" in form:
+        if "NOW" in form:
             cell.number_format = "DD/MM/YYYY HH:MM"
 
     for i, (desc, form) in enumerate(formulas_avancadas, start=3):
@@ -404,7 +404,7 @@ def create_condicional(wb):
 
     ws.merge_cells("A1:G1")
     cell = ws["A1"]
-    cell.value = "Coluna Condicional — SE, IFS, SEERRO, SWITCH"
+    cell.value = "Coluna Condicional — SE, IFS, IFERROR, SWITCH"
     cell.font = Font(bold=True, size=13, color="1F4E79")
     cell.alignment = Alignment(horizontal="center")
     ws.row_dimensions[1].height = 25
@@ -432,25 +432,25 @@ def create_condicional(wb):
 
         # SE aninhado
         cell = ws.cell(row=r, column=4,
-                       value=f'=SE(C{r}>12000,"Especialista",SE(C{r}>8000,"Senior",SE(C{r}>5000,"Pleno","Junior")))')
+                       value=f'=IF(C{r}>12000,"Especialista",IF(C{r}>8000,"Senior",IF(C{r}>5000,"Pleno","Junior")))')
         cell.fill = PatternFill("solid", fgColor="FFF2CC")
         cell.font = Font(size=9)
 
         # IFS (Excel 2016+)
         cell = ws.cell(row=r, column=5,
-                       value=f'=IFS(C{r}>12000,"Especialista",C{r}>8000,"Senior",C{r}>5000,"Pleno",VERDADEIRO,"Junior")')
+                       value=f'=IFS(C{r}>12000,"Especialista",C{r}>8000,"Senior",C{r}>5000,"Pleno",TRUE,"Junior")')
         cell.fill = PatternFill("solid", fgColor="FFF2CC")
         cell.font = Font(size=9)
 
         # Faixa salarial
         cell = ws.cell(row=r, column=6,
-                       value=f'=SE(C{r}>10000,"Alto",SE(C{r}>6000,"Medio","Baixo"))')
+                       value=f'=IF(C{r}>10000,"Alto",IF(C{r}>6000,"Medio","Baixo"))')
         cell.fill = PatternFill("solid", fgColor="E2EFDA")
         cell.font = Font(size=9)
 
         # Ativo Label
         cell = ws.cell(row=r, column=7,
-                       value=f'=SE(G{r}="Sim","Ativo","Inativo")')
+                       value=f'=IF(Dados!H{r}="Sim","Ativo","Inativo")')
         cell.fill = PatternFill("solid", fgColor="E2EFDA")
         cell.font = Font(size=9)
 
@@ -465,19 +465,19 @@ def create_lookup(wb):
 
     ws.merge_cells("A1:G1")
     cell = ws["A1"]
-    cell.value = "Lookup — PROCV, PROCX, INDICE+CORRESP"
+    cell.value = "Lookup — VLOOKUP, XLOOKUP, INDEX+MATCH"
     cell.font = Font(bold=True, size=13, color="1F4E79")
     cell.alignment = Alignment(horizontal="center")
     ws.row_dimensions[1].height = 25
 
     # Secao de exemplos
     section_style(ws, 2, 1, "ID Buscado")
-    section_style(ws, 2, 2, "PROCV — Nome")
-    section_style(ws, 2, 3, "PROCV — Departamento")
-    section_style(ws, 2, 4, "PROCV — Salario")
-    section_style(ws, 2, 5, "PROCX — Cargo")
-    section_style(ws, 2, 6, "INDICE+CORRESP — Cidade")
-    section_style(ws, 2, 7, "SEERRO — seguro")
+    section_style(ws, 2, 2, "VLOOKUP — Nome")
+    section_style(ws, 2, 3, "VLOOKUP — Departamento")
+    section_style(ws, 2, 4, "VLOOKUP — Salario")
+    section_style(ws, 2, 5, "XLOOKUP — Cargo")
+    section_style(ws, 2, 6, "INDEX+MATCH — Cidade")
+    section_style(ws, 2, 7, "IFERROR — seguro")
 
     ws.column_dimensions["A"].width = 12
     ws.column_dimensions["B"].width = 22
@@ -487,37 +487,37 @@ def create_lookup(wb):
     ws.column_dimensions["F"].width = 20
     ws.column_dimensions["G"].width = 22
 
-    # IDs para buscar (alguns existem, um nao existe para demonstrar SEERRO)
+    # IDs para buscar (alguns existem, um nao existe para demonstrar IFERROR)
     ids = [1, 5, 10, 20, 35, 50, 99]
     for r, id_val in enumerate(ids, start=3):
         ws.cell(row=r, column=1, value=id_val).font = Font(bold=True)
 
-        # PROCV
+        # VLOOKUP
         ws.cell(row=r, column=2,
-                value=f'=PROCV(A{r},Dados!$A$3:$H$54,2,FALSO)').fill = PatternFill("solid", fgColor="FFF2CC")
+                value=f'=VLOOKUP(A{r},Dados!$A$3:$H$54,2,FALSE)').fill = PatternFill("solid", fgColor="FFF2CC")
         ws.cell(row=r, column=3,
-                value=f'=PROCV(A{r},Dados!$A$3:$H$54,3,FALSO)').fill = PatternFill("solid", fgColor="FFF2CC")
+                value=f'=VLOOKUP(A{r},Dados!$A$3:$H$54,3,FALSE)').fill = PatternFill("solid", fgColor="FFF2CC")
         cell = ws.cell(row=r, column=4,
-                value=f'=PROCV(A{r},Dados!$A$3:$H$54,6,FALSO)')
+                value=f'=VLOOKUP(A{r},Dados!$A$3:$H$54,6,FALSE)')
         cell.fill = PatternFill("solid", fgColor="FFF2CC")
         cell.number_format = 'R$ #,##0.00'
 
-        # PROCX (Excel 365 / 2021)
+        # XLOOKUP (Excel 365 / 2021)
         ws.cell(row=r, column=5,
-                value=f'=PROCX(A{r},Dados!$A$3:$A$54,Dados!$D$3:$D$54,"Nao encontrado")').fill = PatternFill("solid", fgColor="E2EFDA")
+                value=f'=XLOOKUP(A{r},Dados!$A$3:$A$54,Dados!$D$3:$D$54,"Nao encontrado")').fill = PatternFill("solid", fgColor="E2EFDA")
 
-        # INDICE + CORRESP
+        # INDEX + MATCH
         ws.cell(row=r, column=6,
-                value=f'=INDICE(Dados!$E$3:$E$54,CORRESP(A{r},Dados!$A$3:$A$54,0))').fill = PatternFill("solid", fgColor="DDEEFF")
+                value=f'=INDEX(Dados!$E$3:$E$54,MATCH(A{r},Dados!$A$3:$A$54,0))').fill = PatternFill("solid", fgColor="DDEEFF")
 
-        # SEERRO + PROCV (tratamento de erro)
+        # IFERROR + VLOOKUP (tratamento de erro)
         ws.cell(row=r, column=7,
-                value=f'=SEERRO(PROCV(A{r},Dados!$A$3:$H$54,2,FALSO),"ID nao encontrado")').fill = PatternFill("solid", fgColor="FFE0E0")
+                value=f'=IFERROR(VLOOKUP(A{r},Dados!$A$3:$H$54,2,FALSE),"ID nao encontrado")').fill = PatternFill("solid", fgColor="FFE0E0")
 
     apply_table_border(ws, 2, 3+len(ids)-1, 1, 7)
 
     # Legenda
-    ws.cell(row=12, column=1, value="Amarelo = PROCV  |  Verde = PROCX (Excel 365+)  |  Azul = INDICE+CORRESP  |  Vermelho = SEERRO").font = Font(italic=True, color="595959", size=9)
+    ws.cell(row=12, column=1, value="Amarelo = VLOOKUP  |  Verde = XLOOKUP (Excel 365+)  |  Azul = INDEX+MATCH  |  Vermelho = IFERROR").font = Font(italic=True, color="595959", size=9)
     ws.merge_cells("A12:G12")
 
     print("  [OK] Aba 'Lookup' criada")
@@ -534,7 +534,7 @@ def create_metricas(wb):
     cell.alignment = Alignment(horizontal="center")
     ws.row_dimensions[1].height = 25
 
-    headers = ["Nome", "Departamento", "Salario", "Ranking (ORDEM.EQ)"]
+    headers = ["Nome", "Departamento", "Salario", "Ranking (RANK.EQ)"]
     widths  = [22, 16, 14, 20]
     for i, (h, w) in enumerate(zip(headers, widths), start=1):
         header_style(ws, 2, i, h, cor_hex="C55A11")
@@ -556,7 +556,7 @@ def create_metricas(wb):
 
         n_total = len(emp) + 2
         cell = ws.cell(row=r, column=4,
-                       value=f'=ORDEM.EQ(C{r},$C$3:$C${n_total},0)')
+                       value=f'=RANK.EQ(C{r},$C$3:$C${n_total},0)')
         cell.fill = PatternFill("solid", fgColor="FFF2CC")
 
     n = len(emp) + 2
@@ -568,14 +568,14 @@ def create_metricas(wb):
     ws.column_dimensions["G"].width = 42
 
     metricas = [
-        ("1o maior salario",   "=GRANDE($C$3:$C$54,1)"),
-        ("2o maior salario",   "=GRANDE($C$3:$C$54,2)"),
-        ("3o maior salario",   "=GRANDE($C$3:$54,3)"),
-        ("1o menor salario",   "=PEQUENO($C$3:$C$54,1)"),
-        ("Mediana",            "=MED($C$3:$C$54)"),
-        ("Desvio Padrao",      "=DESVPAD($C$3:$C$54)"),
-        ("% acima da media",   "=CONT.SE($C$3:$C$54,\">\"&MEDIA($C$3:$C$54))/CONT.VALORES($C$3:$C$54)"),
-        ("Folha top 10",       "=SOMARPRODUTO(GRANDE($C$3:$C$54,{1,2,3,4,5,6,7,8,9,10}))"),
+        ("1o maior salario",   "=LARGE($C$3:$C$54,1)"),
+        ("2o maior salario",   "=LARGE($C$3:$C$54,2)"),
+        ("3o maior salario",   "=LARGE($C$3:$C$54,3)"),
+        ("1o menor salario",   "=SMALL($C$3:$C$54,1)"),
+        ("Mediana",            "=MEDIAN($C$3:$C$54)"),
+        ("Desvio Padrao",      "=STDEV($C$3:$C$54)"),
+        ("% acima da media",   "=COUNTIF($C$3:$C$54,\">\"&AVERAGE($C$3:$C$54))/COUNTA($C$3:$C$54)"),
+        ("Folha top 10",       "=SUMRPRODUTO(LARGE($C$3:$C$54,{1,2,3,4,5,6,7,8,9,10}))"),
     ]
     for i, (label, form) in enumerate(metricas, start=3):
         ws.cell(row=i, column=6, value=label).font = Font(size=10)
