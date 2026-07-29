@@ -8,6 +8,8 @@ Arquivos Excel prontos para estudo e replicação das 24 operações do cheat sh
 
 ### `cheatsheet_excel.xlsx`
 
+📥 **[Baixar cheatsheet_excel.xlsx](cheatsheet_excel.xlsx)**
+
 Gerado pelo script `generate_excel.py` com dados reais e fórmulas funcionais.
 
 Para regenerar (caso queira atualizar com novos datasets):
