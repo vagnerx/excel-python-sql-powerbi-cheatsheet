@@ -32,14 +32,24 @@ Fonte = Excel.Workbook(File.Contents("C:\caminho\arquivo.xlsx"), null, true)
 
 ## 3. Merge / Join (13)
 
-Operações de Join são feitas através do `Table.NestedJoin`, seguidas da expansão.
+> ⚠️ **Boas Práticas no Power BI:** O padrão recomendado é importar as tabelas originais e ligá-las via *Relacionamentos* na **Exibição de Modelo** (veja [star_schema.md](star_schema.md)). Fazer o Join (mesclar) direto no Power Query só é indicado se você realmente precisar unificar/achatar as tabelas antes de carregá-las no modelo (ETL).
+
+Se você precisar cruzar dados no Power Query, **não é necessário escrever código M**. Faça 100% pela interface gráfica:
+
+1. Selecione a tabela principal (ex: `orders`).
+2. Na guia **Página Inicial**, clique em **Mesclar Consultas**.
+3. Selecione a segunda tabela (ex: `customers`) e clique nas colunas de ligação (ex: `id_cliente`) em ambas as pré-visualizações.
+4. Escolha o **Tipo de Junção** (ex: *Externa Esquerda / Left Outer*).
+5. Após dar OK, clique no botão de "setas duplas" (Expandir) no cabeçalho da nova coluna gerada para escolher quais campos da segunda tabela você quer manter.
+
+Por trás dos panos, o Power BI vai gerar este código M automaticamente no **Editor Avançado**:
 
 ```powerquery-m
-// LEFT JOIN (Padrão)
+// LEFT JOIN (Externa Esquerda) - O código abaixo é gerado pela interface
 #"Consultas Mescladas" = Table.NestedJoin(orders, {"id_cliente"}, customers, {"id_cliente"}, "customers", JoinKind.LeftOuter),
 #"customers Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas", "customers", {"nome", "segmento"}, {"cliente_nome", "cliente_segmento"})
 
-// INNER JOIN
+// INNER JOIN (Interna)
 #"Consultas Mescladas Inner" = Table.NestedJoin(orders, {"id_cliente"}, customers, {"id_cliente"}, "customers", JoinKind.Inner)
 
 // ANTI JOIN (Left Anti) - Encontrar clientes sem pedidos
