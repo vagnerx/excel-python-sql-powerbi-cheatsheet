@@ -37,7 +37,10 @@ Como o arquivo `.pbix` é um formato binário gerado pela interface da Microsoft
 5. Vá para a visão de **Dados** e crie uma **Nova Tabela** para a dimensão Calendário, conforme o [time_intelligence.md](time_intelligence.md).
 6. Crie uma **Nova Medida** para cada fórmula encontrada no [dax.md](dax.md).
 7. Arraste essas medidas para visuais de Matriz, Gráficos de Coluna e Cartões na tela de Relatório.
-8. Salve o arquivo como `cheatsheet.pbix` dentro desta pasta `examples/powerbi/`.
+8. Salve o arquivo como `cheatsheet.pbix` dentro desta pasta `docs/examples/powerbi/`.
+
+> 💡 **Pronto?** Após criar o arquivo e commitar no GitHub, ele estará disponível para download aqui:  
+> 📥 **[Baixar cheatsheet.pbix](cheatsheet.pbix)** *(Requer Power BI Desktop para abrir)*
 
 ---
 
