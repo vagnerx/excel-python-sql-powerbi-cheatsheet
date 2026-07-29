@@ -121,6 +121,12 @@ def create_dados(wb):
     for r, row in enumerate(emp, start=3):
         cor = cores[r % 2]
         fill = PatternFill("solid", fgColor=cor)
+        d_str = row.get("data_admissao","")
+        if d_str:
+            d_val = datetime.strptime(d_str, "%Y-%m-%d")
+        else:
+            d_val = ""
+
         vals = [
             int(row["id"]) if row.get("id") else "",
             row.get("nome",""),
@@ -128,7 +134,7 @@ def create_dados(wb):
             row.get("cargo",""),
             row.get("cidade",""),
             float(row["salario"]) if row.get("salario") else None,
-            row.get("data_admissao",""),
+            d_val,
             row.get("ativo",""),
         ]
         for c, v in enumerate(vals, start=1):
@@ -158,7 +164,7 @@ def create_dados(wb):
         ("Maior salario",           "=MAX(F3:F54)"),
         ("Menor salario",           "=MIN(F3:F54)"),
         ("Folha total",             "=SUM(F3:F54)"),
-        ("Nulos em salario",        "=COUNTA(F3:F54)-COUNT(F3:F54)"),
+        ("Nulos em salario",        "=COUNTBLANK(F3:F54)"),
     ]
     for i, (label, formula) in enumerate(resumo, start=3):
         ws.cell(row=i, column=10, value=label).font = Font(size=10)
@@ -217,7 +223,7 @@ def create_filtros(wb):
         ("Nome menor salario",        "=INDEX(Dados!B3:B54,MATCH(MIN(Dados!F3:F54),Dados!F3:F54,0))"),
         ("3o maior salario",          "=LARGE(Dados!F3:F54,3)"),
         ("3o menor salario",          "=SMALL(Dados!F3:F54,3)"),
-        ("Unicos departamentos",      "=SUMPRODUCT(1/COUNTIF(Dados!C3:C53,Dados!C3:C53))"),
+        ("Unicos departamentos",      "=SUMPRODUCT((Dados!C3:C54<>\"\")/COUNTIF(Dados!C3:C54,Dados!C3:C54&\"\"))"),
         ("% salario > 8000",         "=COUNTIF(Dados!F3:F54,\">8000\")/COUNTA(Dados!F3:F54)"),
         ("Folha ativos",              '=SUMIF(Dados!H3:H54,"Sim",Dados!F3:F54)'),
     ]
@@ -388,10 +394,12 @@ def create_datas(wb):
         cell = ws.cell(row=i, column=6, value=form)
         cell.fill = PatternFill("solid", fgColor="E2EFDA")
         cell.font = Font(size=10)
-        if "data" in desc.lower() or "recente" in desc.lower() or "dia" in desc.lower() or "hoje" in desc.lower():
+        if desc in ["Data + 30 dias", "Primeiro dia do mes", "Ultimo dia do mes", "Mais recente admissao"]:
             cell.number_format = "DD/MM/YYYY"
-        if "anos" in desc.lower():
+        elif "anos" in desc.lower():
             cell.number_format = "0.0"
+        else:
+            cell.number_format = "General"
 
     apply_table_border(ws, 2, 12, 1, 2)
     apply_table_border(ws, 2, 12, 5, 6)
