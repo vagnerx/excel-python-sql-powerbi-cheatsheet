@@ -27,7 +27,7 @@ python docs/examples/sql/run_sql.py docs/examples/sql/02_aggregations.sql
 
 A forma mais visual e didática. Abra o notebook interativo:
 
-👉 **[Abrir `notebooks/sql_com_python.ipynb`](../../notebooks/sql_com_python.ipynb)**
+👉 **[Visualizar no GitHub (`sql_com_python.ipynb`)](https://github.com/vagnerx/excel-python-sql-powerbi-cheatsheet/blob/main/notebooks/sql_com_python.ipynb)**
 
 ---
 

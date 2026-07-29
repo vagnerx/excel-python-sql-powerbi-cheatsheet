@@ -37,36 +37,36 @@ nav:
 
   - Cheat Sheet:
       - Grupo A · Manipulação Básica:
-          - Importar Dados: 01-importar-dados.md
-          - Filtrar Linhas: 02-filtrar-linhas.md
-          - Selecionar Colunas: 03-selecionar-colunas.md
-          - Ordenar Dados: 04-ordenar-dados.md
-          - Agrupar: 05-agrupar-agregar.md
-          - Contar Linhas: 06-contar-linhas.md
-          - Média: 07-media.md
-          - Soma: 08-soma.md
+          - 01. Importar Dados: 01-importar-dados.md
+          - 02. Filtrar Linhas: 02-filtrar-linhas.md
+          - 03. Selecionar Colunas: 03-selecionar-colunas.md
+          - 04. Ordenar Dados: 04-ordenar-dados.md
+          - 05. Agrupar: 05-agrupar-agregar.md
+          - 06. Contar Linhas: 06-contar-linhas.md
+          - 07. Média: 07-media.md
+          - 08. Soma: 08-soma.md
 
       - Grupo B · Transformação:
-          - Valores Únicos: 09-obter-valores-unicos.md
-          - Renomear Colunas: 10-renomear-colunas.md
-          - Tipos de Dados: 11-tipos-de-dados.md
-          - Tratar Nulos: 12-tratar-nulos.md
-          - Merge Join: 13-merge-join.md
-          - Coluna Condicional: 14-coluna-condicional.md
+          - 09. Valores Únicos: 09-obter-valores-unicos.md
+          - 10. Renomear Colunas: 10-renomear-colunas.md
+          - 11. Tipos de Dados: 11-tipos-de-dados.md
+          - 12. Tratar Nulos: 12-tratar-nulos.md
+          - 13. Merge Join: 13-merge-join.md
+          - 14. Coluna Condicional: 14-coluna-condicional.md
 
       - Grupo C · Datas e Métricas:
-          - Min Max: 15-min-max.md
-          - Datas: 16-extracao-datas.md
-          - Filtrar por Data: 17-filtrar-por-data.md
-          - Contar Únicos: 18-contar-unicos.md
-          - Top N: 19-top-n.md
-          - Percentual: 20-percentual.md
+          - 15. Min Max: 15-min-max.md
+          - 16. Datas: 16-extracao-datas.md
+          - 17. Filtrar por Data: 17-filtrar-por-data.md
+          - 18. Contar Únicos: 18-contar-unicos.md
+          - 19. Top N: 19-top-n.md
+          - 20. Percentual: 20-percentual.md
 
       - Grupo D · Analytics Avançado:
-          - Ranking: 21-ranking.md
-          - Acumulado: 22-acumulado.md
-          - Janela Móvel: 23-janela-movel.md
-          - Pivot / Unpivot: 24-pivot-unpivot.md
+          - 21. Ranking: 21-ranking.md
+          - 22. Acumulado: 22-acumulado.md
+          - 23. Janela Móvel: 23-janela-movel.md
+          - 24. Pivot / Unpivot: 24-pivot-unpivot.md
 
   - Exemplos:
       - Excel:
