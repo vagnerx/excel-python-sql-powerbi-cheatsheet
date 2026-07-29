@@ -122,7 +122,7 @@ def create_dados(wb):
         cor = cores[r % 2]
         fill = PatternFill("solid", fgColor=cor)
         vals = [
-            row.get("id",""),
+            int(row["id"]) if row.get("id") else "",
             row.get("nome",""),
             row.get("departamento",""),
             row.get("cargo",""),
@@ -217,7 +217,7 @@ def create_filtros(wb):
         ("Nome menor salario",        "=INDEX(Dados!B3:B54,MATCH(MIN(Dados!F3:F54),Dados!F3:F54,0))"),
         ("3o maior salario",          "=LARGE(Dados!F3:F54,3)"),
         ("3o menor salario",          "=SMALL(Dados!F3:F54,3)"),
-        ("Unicos departamentos",      "=SUMRPRODUTO(1/COUNTIF(Dados!C3:C53,Dados!C3:C53))"),
+        ("Unicos departamentos",      "=SUMPRODUCT(1/COUNTIF(Dados!C3:C53,Dados!C3:C53))"),
         ("% salario > 8000",         "=COUNTIF(Dados!F3:F54,\">8000\")/COUNTA(Dados!F3:F54)"),
         ("Folha ativos",              '=SUMIF(Dados!H3:H54,"Sim",Dados!F3:F54)'),
     ]
@@ -280,7 +280,7 @@ def create_agrupamento(wb):
         formulas = [
             f'=COUNTIF(Dados!C$3:C$54,A{r})',
             f'=SUMIF(Dados!C$3:C$54,A{r},Dados!F$3:F$54)',
-            f'=AVERAGEIF(Dados!C$3:C$54,A{r},Dados!F$3:F$54)',
+            f'=IFERROR(AVERAGEIF(Dados!C$3:C$54,A{r},Dados!F$3:F$54),0)',
             f'=_xlfn.MAXIFS(Dados!F$3:F$54,Dados!C$3:C$54,A{r})',
             f'=_xlfn.MINIFS(Dados!F$3:F$54,Dados!C$3:C$54,A{r})',
             f'=C{r}/C${total_row}',
@@ -362,8 +362,8 @@ def create_datas(wb):
     ]
     formulas_avancadas = [
         ("Tempo de casa (dias)",    "=TODAY()-Dados!G3"),
-        ("Tempo de casa (anos)",    "=FRAÇÃO.YEAR(Dados!G3,TODAY())"),
-        ("Tempo de casa (meses)",   "=EDATE(Dados!G3,0)"),
+        ("Tempo de casa (anos)",    "=YEARFRAC(Dados!G3,TODAY())"),
+        ("Tempo de casa (meses)",   "=DATEDIF(Dados!G3,TODAY(),\"M\")"),
         ("Data + 30 dias",          "=Dados!G3+30"),
         ("Primeiro dia do mes",     "=DATE(YEAR(Dados!G3),MONTH(Dados!G3),1)"),
         ("Ultimo dia do mes",       "=EOMONTH(Dados!G3,0)"),
@@ -388,7 +388,7 @@ def create_datas(wb):
         cell = ws.cell(row=i, column=6, value=form)
         cell.fill = PatternFill("solid", fgColor="E2EFDA")
         cell.font = Font(size=10)
-        if "data" in desc.lower() or "recente" in desc.lower():
+        if "data" in desc.lower() or "recente" in desc.lower() or "dia" in desc.lower() or "hoje" in desc.lower():
             cell.number_format = "DD/MM/YYYY"
         if "anos" in desc.lower():
             cell.number_format = "0.0"
@@ -556,7 +556,7 @@ def create_metricas(wb):
 
         n_total = len(emp) + 2
         cell = ws.cell(row=r, column=4,
-                       value=f'=RANK(C{r},$C$3:$C${n_total},0)')
+                       value=f'=IF(ISBLANK(C{r}), "", RANK(C{r},$C$3:$C${n_total},0))')
         cell.fill = PatternFill("solid", fgColor="FFF2CC")
 
     n = len(emp) + 2
@@ -575,7 +575,7 @@ def create_metricas(wb):
         ("Mediana",            "=MEDIAN($C$3:$C$54)"),
         ("Desvio Padrao",      "=STDEV($C$3:$C$54)"),
         ("% acima da media",   "=COUNTIF($C$3:$C$54,\">\"&AVERAGE($C$3:$C$54))/COUNTA($C$3:$C$54)"),
-        ("Folha top 3",       "=SUMRPRODUTO(LARGE($C$3:$C$54,{1,2,3,4,5,6,7,8,9,10}))"),
+        ("Folha top 3",       "=LARGE($C$3:$C$54,1)+LARGE($C$3:$C$54,2)+LARGE($C$3:$C$54,3)"),
     ]
     for i, (label, form) in enumerate(metricas, start=3):
         ws.cell(row=i, column=6, value=label).font = Font(size=10)
